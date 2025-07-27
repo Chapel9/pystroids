@@ -16,7 +16,9 @@ def main():
     update_sprites = pygame.sprite.Group()
     draw_sprites = pygame.sprite.Group()
 
-    player_object = Player((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2), update_sprites, draw_sprites)
+    Player.containers = (update_sprites, draw_sprites)
+
+    player_object = Player((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))
 
     while True:
         for event in pygame.event.get():

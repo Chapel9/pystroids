@@ -2,12 +2,13 @@ import pygame
 from circleshape import CircleShape
 from constants import *
 
-class Player(CircleShape, pygame.sprite.Sprite):
+class Player(CircleShape):
     def __init__(self, x, y, *groups):
         super().__init__(x, y, PLAYER_RADIUS)
-        pygame.sprite.Sprite.__init__(self, *groups)
         self.rotation = 0
         
+    def draw(self, screen):
+        pygame.draw.polygon(screen, (255, 255, 255), self.triangle(), 2)
     
     
     def triangle(self):
