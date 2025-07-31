@@ -1,3 +1,4 @@
+import sys
 import pygame
 from constants import *
 from player import Player
@@ -33,11 +34,19 @@ def main():
                 return     
 
         update_sprites.update(dt)          
+        
+        for ast in asteroid:
+            if ast.collides_with(player_object):
+                print("Game Over!")
+                sys.exit()
+
+        
         screen.fill("black")
        
         for sprite in draw_sprites:
             sprite.draw(screen)
         
+
         pygame.display.flip()
         dt = clock.tick(60)/1000
 
