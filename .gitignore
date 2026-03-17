@@ -9,3 +9,6 @@ wheels/
 # Virtual environments
 .venv
 pystroids/
+
+# Game Logging
+game_state.jsonl
