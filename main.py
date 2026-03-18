@@ -5,7 +5,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
-from logger import log_state
+from logger import *
 
 def main():
     pygame.init()
@@ -30,6 +30,7 @@ def main():
     Player.containers = (update_sprites, draw_sprites)
 
     player_object = Player((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))
+    
 
     while True:
         log_state()
@@ -40,6 +41,11 @@ def main():
         update_sprites.update(dt)          
         
         for ast in asteroid:
+            for shot in bullets:
+                if shot.collides_with(ast):
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    ast.kill()
             if ast.collides_with(player_object):
                 print("Game Over!")
                 sys.exit()
