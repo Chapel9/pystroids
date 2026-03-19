@@ -10,24 +10,23 @@ class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
        
-    def split(self):
-        
-        if (self.radius <= ASTEROID_MIN_RADIUS):
-            self.kill()
-            return
-        if (self.radius > ASTEROID_MIN_RADIUS):
-            from asteroidfield import AsteroidField
-            log_event("asteroid_split")
-            angle = random.uniform(20, 50)
-            new_ast_1 = self.velocity.rotate(angle)
-            new_ast_2 = self.velocity.rotate(-angle)
-            new_ast_radius = self.radius - ASTEROID_MIN_RADIUS
-            new_vel = self.velocity * 1.2
-            AsteroidField.spawn(self, new_ast_radius, new_ast_1, new_vel)
-            AsteroidField.spawn(self, new_ast_radius, new_ast_2, new_vel)
-            self.kill()
     def draw(self, screen):
         pygame.draw.circle(screen, (255, 255, 255), self.position, self.radius, 2)
     
     def update(self, dt):
         self.position += (self.velocity * dt)
+    
+    def split(self):
+        self.kill()
+        if self.radius <= ASTEROID_MIN_RADIUS:   
+            return
+        
+        log_event("asteroid_split")
+        angle = random.uniform(20, 50)
+        new_ast_1 = self.velocity.rotate(angle)
+        new_ast_2 = self.velocity.rotate(-angle)
+        new_ast_radius = self.radius - ASTEROID_MIN_RADIUS
+        asteroid = Asteroid(self.position.x, self.position.y, new_ast_radius)
+        asteroid.velocity = new_ast_1 * 1.2
+        asteroid = Asteroid(self.position.x, self.position.y, new_ast_radius)
+        asteroid.velocity = new_ast_2 * 1.2

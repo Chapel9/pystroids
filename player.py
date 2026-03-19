@@ -36,16 +36,16 @@ class Player(CircleShape):
         keys = pygame.key.get_pressed()
         self.shoot_timer -= dt
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a or pygame.k_LEFT]:
             self.rotate(-dt)
 
-        if keys[pygame.K_d]:
+        if keys[pygame.K_d or pygame.k_RIGHT]:
             self.rotate(dt)
         
-        if keys[pygame.K_w]:
+        if keys[pygame.K_w or pygame.k_UP]:
             self.move(dt)
 
-        if keys[pygame.K_s]:
+        if keys[pygame.K_s or pygame.k_DOWN]:
             self.move(-dt)
         
         if keys[pygame.K_SPACE]:
@@ -53,6 +53,8 @@ class Player(CircleShape):
 
 
     def move(self, dt):
-        forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+        unit_vector = pygame.Vector2(0, 1)
+        rotated_vector = unit_vector.rotate(self.rotation)
+        rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * dt
+        self.position += rotated_with_speed_vector
 

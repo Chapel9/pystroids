@@ -47,6 +47,7 @@ def main():
                     shot.kill()
                     ast.split()
             if ast.collides_with(player_object):
+                log_event("player_hit")
                 print("Game Over!")
                 sys.exit()
 
